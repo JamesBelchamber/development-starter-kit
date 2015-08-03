@@ -1,0 +1,6 @@
+*.swp
+*.box
+.vagrant
+.DS_Store
+repos/
+roles/

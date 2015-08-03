@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+  - mivok0.users
+  - { role: gdamjan.gitlab, when: '"gitlab" in group_names' }
+  - { role: geerlingguy.jenkins, when: '"jenkins" in group_names' }

@@ -1,0 +1,6 @@
+[repos/ansible-playbook]
+checkout = git clone 'git@gitlab.supercool.software:supercool/ansible-playbook.git' 'ansible-playbook'
+
+[repos/supercool_app]
+checkout = git clone 'git@gitlab.supercool.software:supercool/supercool_app.git' 'supercool_app'
+
