@@ -1,0 +1,8 @@
+---
+
+- name: Add users to the system
+  user:
+    name: "{{ item.username }}"
+    state: "{{ item.state }}"
+  with_items: example_role.users
+  when: example_role.users

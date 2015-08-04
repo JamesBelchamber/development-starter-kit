@@ -1,0 +1,12 @@
+---
+
+- name: Test example-environment Role
+  hosts: all
+  sudo: true
+  vars:
+    example_role:
+      users:
+        - username: superman
+          state: present
+  roles:
+    - example-role

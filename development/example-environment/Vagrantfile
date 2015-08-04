@@ -1,0 +1,35 @@
+require 'yaml'
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "movedx/centos-6.6"
+
+  # Default so we have a port Ansible knows will exist
+  config.vm.network :forwarded_port, guest: 22, host: 2020
+
+  begin
+    if ENV.has_key? 'VAGRANT_CONFIG'
+      userconfig = YAML.load_file(ENV['VAGRANT_CONFIG'])
+    else
+      userconfig = YAML.load_file('vagrant_config.yml')
+    end
+
+    userconfig['folders'].each do |newfolder|
+      config.vm.synced_folder newfolder['localpath'], newfolder['remotepath'], disabled: newfolder['disabled']
+    end
+
+    userconfig['ports'].each do |port|
+      config.vm.network :forwarded_port, guest: port['guest'], host: port['host']
+    end
+
+  rescue Exception # ignore missing or invalid file
+    print "FYI: Folders environment variable not found or invalid\n"
+  end
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "site.yml"
+    ansible.inventory_path = "local"
+  end
+
+  config.vm.define "sandbox"
+
+end
